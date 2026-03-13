@@ -95,7 +95,6 @@ function validarCampos(unidade) {
 btnInstanciarEscolaA.addEventListener('click', () => {
   
   if (validarCampos('A') === true) {
-    console.log(validarCampos('A'))
     valorInputCidadeA = inputUnidadeACidade.value
     valorInputCodigoA = parseInt(inputUnidadeACodigo.value)
     valorInputAnoA = parseInt(inputUnidadeAAno.value)
@@ -106,7 +105,7 @@ btnInstanciarEscolaA.addEventListener('click', () => {
     pMensagemA.textContent = `SENAI ${novaEscolaA.cidade} foi instanciada`
 
   } else {
-    console.log(validarCampos('A'))
+
     pMensagemA.textContent = 'Preencha todos os campos para criar a escola.'
   }
 
@@ -117,7 +116,6 @@ btnInstanciarEscolaA.addEventListener('click', () => {
 
 btnInstanciarEscolaB.addEventListener('click', () => {
   if (validarCampos('B') === true) {
-    console.log(validarCampos('B'))
     valorInputCidadeB = inputUnidadeBCidade.value
     valorInputCodigoB = parseInt(inputUnidadeBCodigo.value)
     valorInputAnoB = parseInt(inputUnidadeBAno.value)
@@ -212,11 +210,6 @@ function detalhesRelatorio(){
 
 
 
-
-
-btnCompararUnidades.addEventListener('click', () => {
-  console.log(detalhesRelatorio())
-})
 
 /* ===== NOVA CONSULTA ===== */
 
