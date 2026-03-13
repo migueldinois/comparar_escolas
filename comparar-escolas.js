@@ -54,6 +54,10 @@ const btnAbrirEscolaB = document.querySelector('.unidadeB__abrir')
 
 const btnFecharEscolaA = document.querySelector('.unidadeA__fechar')
 const btnFecharEscolaB = document.querySelector('.unidadeB__fechar')
+const btnNovaConsulta = document.querySelector('.sistema__reset')
+
+const btnCompararUnidades = document.querySelector('.sistema__comparar')
+
 
 //  Campos mensagem
 const pMensagemB = document.querySelector('.unidadeB__mensagem');
@@ -62,7 +66,8 @@ const pMensagemA = document.querySelector('.unidadeA__mensagem');
 //  Campos relatorio
 const campoVeredito = document.querySelector('.relatorio__veredito')
 const campoDetalhesA = document.querySelector('.relatorio__linha--a')
-const campoDetalhesB = document.querySelector('.relatorio__linha--B')
+const campoDetalhesB = document.querySelector('.relatorio__linha--b')
+const relatorioDiv = document.querySelector('.relatorio--oculto')
 
 
 
@@ -148,40 +153,81 @@ btnAbrirEscolaB.addEventListener('click', () => {
     pMensagemB.textContent = 'Preencha todos os campos para abrir a escola.'
   }
 })
+/* ===== FECHAR ESCOLA A ===== */
+
+btnFecharEscolaA.addEventListener('click', () => {
+  if (validarCampos('A') === true) {
+  novaEscolaA.abrirEscola()
+  pMensagemA.textContent = `Fechada: Atividades encerradas.`
+  } else {
+    pMensagemA.textContent = 'Preencha todos os campos para fechar a escola.'
+  }
+})
+
+/* ===== FECHAR ESCOLA B ===== */
+
+btnFecharEscolaB.addEventListener('click', () => {
+  if (validarCampos('B') === true) {
+  novaEscolaB.abrirEscola()
+  pMensagemB.textContent = `Fechada: Atividades encerradas.`
+  } else {
+    pMensagemB.textContent = 'Preencha todos os campos para abrir a escola.'
+  }
+})
 
 
 /* ===== RELATÓRIO DE COMPARAÇÃO ===== */
 
 function detalhesRelatorio(){
   if (validarCampos('A') === true || validarCampos('B') === true){
-    campoDetalhesA.textContent = `\nUNIDADE A \n Código ${novaEscolaA.codigo} \n Fundação ${novaEscolaA.anoConstrucao} (${novaEscolaA.idade}) \n Oferta ${novaEscolaA.qtdeCursos}`
-    campoDetalhesB.textContent = `\nUNIDADE B \n Código ${novaEscolaB.codigo} \n Fundação ${novaEscolaB.anoConstrucao} (${novaEscolaB.idade}) \n Oferta ${novaEscolaB.qtdeCursos}`
-
-  }
-}
-
-function compararDados(){
-  const relatorio = {
-    maisCursos: null,
-    menosCursos: null,
-    cursosIguais: false
-  }
   
-  if (novaEscolaA.qtdeCursos > novaEscolaB.qtdeCursos){
-    relatorio.maisCursos = novaEscolaA
-    relatorio.menosCursos = novaEscolaB
-  }
-  else if(novaEscolaA.qtdeCursos < novaEscolaB.qtdeCursos){
-    relatorio.menosCursos = novaEscolaA
-    relatorio.maisCursos = novaEscolaB
+    if(novaEscolaA.qtdeCursos > novaEscolaB.qtdeCursos){
+      campoVeredito.textContent = `${novaEscolaA.cidade} lidera com ${novaEscolaA.qtdeCursos} cursos.`
+    } else if(novaEscolaB.qtdeCursos > novaEscolaA.qtdeCursos) {
+      campoVeredito.textContent = `${novaEscolaB.cidade} lidera com ${novaEscolaB.qtdeCursos} cursos.`
+    } else if(novaEscolaB.qtdeCursos = novaEscolaA.qtdeCursos){
+      campoVeredito.textContent = 'As duas unidades são equivalentes aos cursos'
+    }
+
+    relatorioDiv.style.display = 'block'
+    campoDetalhesA.textContent = `\nUNIDADE A 
+    Código ${novaEscolaA.codigo} 
+    Fundação ${novaEscolaA.anoConstrucao} (${novaEscolaA.idade}) 
+    Oferta ${novaEscolaA.qtdeCursos} Cursos
     
-  }
-  else if(novaEscolaA.qtdeCursos = novaEscolaB.qtdeCursos){
-    relatorio.cursosIguais = true
-    campoVeredito.textContent = 'As duas unidades são equivalentes aos cursos.'
+    `
+
+    relatorioDiv.style.display = 'block'
+    campoDetalhesB.textContent = `\nUNIDADE B 
+    Código ${novaEscolaB.codigo} 
+    Fundação ${novaEscolaB.anoConstrucao} (${novaEscolaB.idade}) 
+    Oferta ${novaEscolaB.qtdeCursos} Cursos`
+
+    
+  } else {
+    pMensagemA.textContent = 'Preencha todos os campos para abrir a escola.'
+    pMensagemB.textContent = 'Preencha todos os campos para abrir a escola.'
   }
 }
+
+
+
+
+
+btnCompararUnidades.addEventListener('click', () => {
+  console.log(detalhesRelatorio())
+})
 
 /* ===== NOVA CONSULTA ===== */
 
 
+btnNovaConsulta.addEventListener('click', () => {
+  inputUnidadeACidade.value = ''
+  inputUnidadeACodigo.value = ''
+  inputUnidadeAAno.value = ''
+  inputUnidadeACursos.value = ''
+  pMensagemA.textContent = ''
+  pMensagemB.textContent = ''
+  relatorioDiv.style.display = 'none'
+  location.reload()
+})
